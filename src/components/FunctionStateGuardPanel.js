@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  Paper, 
+import {
+  Box,
+  Typography,
+  Paper,
   Divider,
   Alert,
   Tooltip,
   Button
 } from '@mui/material';
-import { 
+import {
   Warning as WarningIcon,
   CheckCircle as CheckCircleIcon,
   LocationOn as LocationIcon,
   TransferWithinAStation as TransferIcon
 } from '@mui/icons-material';
-import { canExecuteFunctionAtLocation, getLocationGuardError, performLocationTransition } from '../utils/LocationGuards';
+import { canExecuteFunctionAtLocation, getLocationGuardError, performLocationTransition } from './LocationGuards';
 
 const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubjectUpdate }) => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -34,7 +34,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
     if (functionState && selectedSubject) {
       const canExecute = canExecuteFunctionAtLocation(functionState, selectedSubject);
       const errorMessage = getLocationGuardError(functionState, selectedSubject, locations);
-      
+
       setGuardStatus({
         valid: canExecute,
         message: errorMessage
@@ -47,7 +47,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
     if (!selectedSubject || !functionState || !functionState.properties || !functionState.properties.locationGuard) {
       return;
     }
-    
+
     const updatedSubject = performLocationTransition(selectedSubject, functionState.properties.locationGuard);
     if (onSubjectUpdate) {
       onSubjectUpdate(updatedSubject);
@@ -80,9 +80,9 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
           {functionState.properties.isLocationTransition ? 'Standortwechsel' : 'Standort-Guard'}
         </Typography>
       </Box>
-      
+
       <Divider sx={{ mb: 2 }} />
-      
+
       {functionState.properties.isLocationTransition ? (
         // Anzeige für Standortwechsel
         <>
@@ -97,7 +97,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               </Typography>
             </Box>
           </Box>
-          
+
           {selectedSubject && (
             <Box mb={2}>
               <Typography variant="body2" fontWeight="bold">
@@ -106,7 +106,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               <Typography variant="body2">
                 {selectedSubject.text}
               </Typography>
-              
+
               <Typography variant="body2" fontWeight="bold" mt={1}>
                 Aktueller Standort:
               </Typography>
@@ -118,7 +118,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               </Box>
             </Box>
           )}
-          
+
           {functionState.properties.transitionTime > 0 && (
             <Box mb={2}>
               <Typography variant="body2" fontWeight="bold">
@@ -129,7 +129,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               </Typography>
             </Box>
           )}
-          
+
           {functionState.properties.transitionEvent && (
             <Box mb={2}>
               <Typography variant="body2" fontWeight="bold">
@@ -140,10 +140,10 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               </Typography>
             </Box>
           )}
-          
-          <Button 
-            variant="contained" 
-            color="secondary" 
+
+          <Button
+            variant="contained"
+            color="secondary"
             startIcon={<TransferIcon />}
             fullWidth
             onClick={handleLocationTransition}
@@ -166,7 +166,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               </Typography>
             </Box>
           </Box>
-          
+
           {selectedSubject && (
             <Box mb={2}>
               <Typography variant="body2" fontWeight="bold">
@@ -175,7 +175,7 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               <Typography variant="body2">
                 {selectedSubject.text}
               </Typography>
-              
+
               <Typography variant="body2" fontWeight="bold" mt={1}>
                 Aktueller Standort:
               </Typography>
@@ -187,17 +187,17 @@ const FunctionStateGuardPanel = ({ functionState, subjects, locations, onSubject
               </Box>
             </Box>
           )}
-          
+
           {guardStatus.message && (
             <Alert severity={guardStatus.valid ? "success" : "warning"} sx={{ mt: 1 }}>
               {guardStatus.message}
             </Alert>
           )}
-          
+
           {!guardStatus.valid && selectedSubject && selectedSubject.properties.isMobile && (
-            <Button 
-              variant="contained" 
-              color="primary" 
+            <Button
+              variant="contained"
+              color="primary"
               startIcon={<TransferIcon />}
               fullWidth
               sx={{ mt: 2 }}

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Typography, 
-  Paper, 
+import {
+  Box,
+  Typography,
+  Paper,
   Divider,
   Alert,
   Tooltip,
   Chip
 } from '@mui/material';
-import { 
+import {
   LocationOn as LocationIcon,
   Info as InfoIcon
 } from '@mui/icons-material';
-import { canSendLocationMessage, getLocationMessageError } from '../utils/LocationGuards';
+import { canSendLocationMessage, getLocationMessageError } from './LocationGuards';
 
 const MessageLocationPanel = ({ message, subjects, locations }) => {
   const [sender, setSender] = useState(null);
@@ -38,7 +38,7 @@ const MessageLocationPanel = ({ message, subjects, locations }) => {
     if (message && sender && receiver) {
       const canSend = canSendLocationMessage(message, sender, receiver);
       const errorMessage = getLocationMessageError(message, sender, receiver, locations);
-      
+
       setMessageStatus({
         valid: canSend,
         message: errorMessage
@@ -60,9 +60,9 @@ const MessageLocationPanel = ({ message, subjects, locations }) => {
           Standortinformation in Nachricht
         </Typography>
       </Box>
-      
+
       <Divider sx={{ mb: 2 }} />
-      
+
       <Box mb={2}>
         <Typography variant="body2" fontWeight="bold">
           Enthaltener Standort:
@@ -74,19 +74,19 @@ const MessageLocationPanel = ({ message, subjects, locations }) => {
           </Typography>
         </Box>
       </Box>
-      
+
       {message.properties.requiresSameLocation && (
         <Box mb={2}>
-          <Chip 
-            icon={<InfoIcon />} 
-            label="Erfordert gleichen Standort für Sender und Empfänger" 
-            color="primary" 
-            variant="outlined" 
+          <Chip
+            icon={<InfoIcon />}
+            label="Erfordert gleichen Standort für Sender und Empfänger"
+            color="primary"
+            variant="outlined"
             size="small"
           />
         </Box>
       )}
-      
+
       {sender && receiver && (
         <>
           <Box mb={2}>
@@ -97,15 +97,15 @@ const MessageLocationPanel = ({ message, subjects, locations }) => {
               <Typography variant="body2" mr={1}>
                 {sender.text}
               </Typography>
-              <Chip 
-                icon={<LocationIcon fontSize="small" />} 
-                label={locations.find(loc => loc.id === sender.properties.currentLocationId)?.text || 'Kein Standort'} 
-                size="small" 
+              <Chip
+                icon={<LocationIcon fontSize="small" />}
+                label={locations.find(loc => loc.id === sender.properties.currentLocationId)?.text || 'Kein Standort'}
+                size="small"
                 variant="outlined"
               />
             </Box>
           </Box>
-          
+
           <Box mb={2}>
             <Typography variant="body2" fontWeight="bold">
               Empfänger:
@@ -114,15 +114,15 @@ const MessageLocationPanel = ({ message, subjects, locations }) => {
               <Typography variant="body2" mr={1}>
                 {receiver.text}
               </Typography>
-              <Chip 
-                icon={<LocationIcon fontSize="small" />} 
-                label={locations.find(loc => loc.id === receiver.properties.currentLocationId)?.text || 'Kein Standort'} 
-                size="small" 
+              <Chip
+                icon={<LocationIcon fontSize="small" />}
+                label={locations.find(loc => loc.id === receiver.properties.currentLocationId)?.text || 'Kein Standort'}
+                size="small"
                 variant="outlined"
               />
             </Box>
           </Box>
-          
+
           {messageStatus.message && (
             <Alert severity={messageStatus.valid ? "success" : "warning"} sx={{ mt: 1 }}>
               {messageStatus.message}
@@ -130,7 +130,7 @@ const MessageLocationPanel = ({ message, subjects, locations }) => {
           )}
         </>
       )}
-      
+
       <Box mt={2}>
         <Typography variant="body2" color="textSecondary">
           <InfoIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 0.5 }} />

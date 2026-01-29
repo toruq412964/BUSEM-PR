@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Tabs, 
-  Tab, 
-  Box, 
-  Drawer, 
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Tabs,
+  Tab,
+  Box,
+  Drawer,
   Divider,
   List,
   ListItem,
@@ -157,13 +157,13 @@ function App() {
   const handleUpdateElement = (updatedElement) => {
     // Wenn es sich um einen Standort handelt, aktualisieren wir die Standortliste
     if (updatedElement.type === 'location') {
-      const updatedLocations = locations.map(location => 
+      const updatedLocations = locations.map(location =>
         location.id === updatedElement.id ? updatedElement : location
       );
       setLocations(updatedLocations);
     }
 
-    const updatedElements = elements.map(element => 
+    const updatedElements = elements.map(element =>
       element.id === updatedElement.id ? updatedElement : element
     );
     setElements(updatedElements);
@@ -175,7 +175,7 @@ function App() {
     const deletedLocation = locations.find(location => location.id === elementId);
     if (deletedLocation) {
       setLocations(locations.filter(location => location.id !== elementId));
-      
+
       // Aktualisieren aller Elemente, die auf diesen Standort verweisen
       const updatedElements = elements.map(element => {
         if (element.properties) {
@@ -248,9 +248,9 @@ function App() {
   const createLocationTransition = (subjectId, sourceLocationId, targetLocationId) => {
     const sourceLocation = locations.find(loc => loc.id === sourceLocationId);
     const targetLocation = locations.find(loc => loc.id === targetLocationId);
-    
+
     if (!sourceLocation || !targetLocation) return;
-    
+
     const transitionElement = {
       id: `transition-${Date.now()}`,
       type: 'location-transition',
@@ -265,7 +265,7 @@ function App() {
         transitionEvent: null
       }
     };
-    
+
     setElements([...elements, transitionElement]);
   };
 
@@ -273,9 +273,9 @@ function App() {
   const createLocationTransitionFunction = (subjectId, sourceLocationId, targetLocationId) => {
     const sourceLocation = locations.find(loc => loc.id === sourceLocationId);
     const targetLocation = locations.find(loc => loc.id === targetLocationId);
-    
+
     if (!sourceLocation || !targetLocation) return;
-    
+
     const transitionFunction = {
       id: `function-${Date.now()}`,
       type: 'function-state',
@@ -291,16 +291,16 @@ function App() {
         transitionEvent: 'Angekommen'
       }
     };
-    
+
     setElements([...elements, transitionFunction]);
   };
 
   // Hilfsfunktion zum Erstellen eines Funktionszustands mit Standort-Guard
   const createLocationGuardFunction = (locationId) => {
     const location = locations.find(loc => loc.id === locationId);
-    
+
     if (!location) return;
-    
+
     const guardFunction = {
       id: `function-${Date.now()}`,
       type: 'function-state',
@@ -312,7 +312,7 @@ function App() {
         locationGuard: locationId
       }
     };
-    
+
     setElements([...elements, guardFunction]);
   };
 
@@ -331,7 +331,7 @@ function App() {
         description: 'Standort des Technikers'
       }
     };
-    
+
     const productionHallLocation = {
       id: `location-${Date.now()}-production`,
       type: 'location',
@@ -344,7 +344,7 @@ function App() {
         description: 'Standort der Maschine'
       }
     };
-    
+
     // Subjekte erstellen
     const technicianSubject = {
       id: `subject-${Date.now()}-technician`,
@@ -359,7 +359,7 @@ function App() {
         startLocationId: workshopLocation.id
       }
     };
-    
+
     const machineSubject = {
       id: `subject-${Date.now()}-machine`,
       type: 'subject',
@@ -372,7 +372,7 @@ function App() {
         currentLocationId: productionHallLocation.id
       }
     };
-    
+
     // Funktionszustände erstellen
     const receiveErrorMessage = {
       id: `function-${Date.now()}-receive`,
@@ -384,7 +384,7 @@ function App() {
         requiresLocation: false
       }
     };
-    
+
     const changeLocation = {
       id: `function-${Date.now()}-change`,
       type: 'function-state',
@@ -400,7 +400,7 @@ function App() {
         transitionEvent: 'Angekommen'
       }
     };
-    
+
     const sendArrivalMessage = {
       id: `function-${Date.now()}-arrival`,
       type: 'function-state',
@@ -412,7 +412,7 @@ function App() {
         locationGuard: productionHallLocation.id
       }
     };
-    
+
     const repairFunction = {
       id: `function-${Date.now()}-repair`,
       type: 'function-state',
@@ -424,7 +424,7 @@ function App() {
         locationGuard: productionHallLocation.id
       }
     };
-    
+
     const sendCompletionMessage = {
       id: `function-${Date.now()}-completion`,
       type: 'function-state',
@@ -436,7 +436,7 @@ function App() {
         locationGuard: productionHallLocation.id
       }
     };
-    
+
     // Maschinen-Funktionszustände
     const sendErrorMessage = {
       id: `function-${Date.now()}-error`,
@@ -449,7 +449,7 @@ function App() {
         locationGuard: productionHallLocation.id
       }
     };
-    
+
     const receiveArrivalMessage = {
       id: `function-${Date.now()}-receive-arrival`,
       type: 'function-state',
@@ -461,7 +461,7 @@ function App() {
         locationGuard: productionHallLocation.id
       }
     };
-    
+
     const receiveCompletionMessage = {
       id: `function-${Date.now()}-receive-completion`,
       type: 'function-state',
@@ -473,7 +473,7 @@ function App() {
         locationGuard: productionHallLocation.id
       }
     };
-    
+
     // Nachrichten erstellen
     const errorMessage = {
       id: `message-${Date.now()}-error`,
@@ -487,7 +487,7 @@ function App() {
         requiresSameLocation: false
       }
     };
-    
+
     const arrivalMessage = {
       id: `message-${Date.now()}-arrival`,
       type: 'message',
@@ -499,7 +499,7 @@ function App() {
         requiresSameLocation: true
       }
     };
-    
+
     const completionMessage = {
       id: `message-${Date.now()}-completion`,
       type: 'message',
@@ -511,7 +511,7 @@ function App() {
         requiresSameLocation: true
       }
     };
-    
+
     // Alle Elemente hinzufügen
     setLocations([workshopLocation, productionHallLocation]);
     setElements([
@@ -535,5 +535,69 @@ function App() {
           <Box ml={2}>
             <IconButton color="inherit" onClick={createTechnicianMachineScenario}>
               <FolderOpenIcon />
-            </IconButton
-(Content truncated due to size limit. Use line ranges to read in chunks)
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      <Box display="flex" height="calc(100vh - 64px)">
+        <Box width={250} borderRight={1} borderColor="divider" overflow="auto">
+          <ElementPalette onAddElement={handleAddElement} />
+        </Box>
+
+        <Box flexGrow={1} display="flex" flexDirection="column">
+          <Paper square>
+            <Tabs value={tabValue} onChange={handleTabChange} indicatorColor="primary" textColor="primary" centered>
+              <Tab label="Modellierung" />
+              <Tab label="Analyse & Tests" disabled={!showTestPanel} />
+            </Tabs>
+          </Paper>
+
+          <Box flexGrow={1} position="relative" overflow="hidden">
+            {tabValue === 0 && (
+              <ModelingCanvas
+                elements={elements}
+                locations={locations}
+                onElementSelect={handleElementSelect}
+                onElementUpdate={handleUpdateElement}
+                mode="integrated"
+              />
+            )}
+            {tabValue === 1 && showTestPanel && (
+              <Box p={2} height="100%" overflow="auto">
+                <TestPanel
+                  elements={elements}
+                  locations={locations}
+                />
+              </Box>
+            )}
+          </Box>
+        </Box>
+
+        <Box width={320} borderLeft={1} borderColor="divider" overflow="auto" p={2}>
+          {selectedElement ? (
+            <PropertiesPanel
+              selectedElement={selectedElement}
+              onElementUpdate={handleUpdateElement}
+              onElementDelete={handleDeleteElement}
+              locations={locations}
+            />
+          ) : (
+            <Box>
+              <Typography variant="body2" color="textSecondary" paragraph>
+                Wählen Sie ein Element aus, um Eigenschaften zu bearbeiten.
+              </Typography>
+              <Divider style={{ margin: '16px 0' }} />
+              <LocationInfoPanel
+                locations={locations}
+                elements={elements}
+              />
+            </Box>
+          )}
+        </Box>
+      </Box>
+    </div>
+  );
+}
+
+export default App;

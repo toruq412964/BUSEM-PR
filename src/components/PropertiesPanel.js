@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  Box, 
-  Typography, 
-  TextField, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem, 
+import {
+  Box,
+  Typography,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
   Button,
   Divider,
   Grid,
@@ -498,5 +498,51 @@ const PropertiesPanel = ({ selectedElement, onElementUpdate, onElementDelete, lo
       </Box>
       <FormControl fullWidth margin="normal">
         <InputLabel>Räumlicher Effekt</InputLabel>
-        <Sele
-(Content truncated due to size limit. Use line ranges to read in chunks)
+        <Select
+          value={selectedElement.properties.spatialEffect || 'none'}
+          onChange={(e) => handlePropertyChange('spatialEffect', e.target.value)}
+        >
+          <MenuItem value="none">Kein Effekt</MenuItem>
+          <MenuItem value="block">Blockiert Bewegung</MenuItem>
+          <MenuItem value="slow">Verlangsamt Bewegung</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  );
+
+  return (
+    <Box>
+      <Typography variant="h5" gutterBottom>
+        Eigenschaften
+      </Typography>
+      <Divider />
+      <Box mt={2}>
+        {renderCommonProperties()}
+
+        {selectedElement.type === 'location' && renderLocationProperties()}
+        {selectedElement.type === 'subject' && renderSubjectLocationProperties()}
+        {selectedElement.type === 'location-transition' && renderLocationTransitionProperties()}
+        {selectedElement.type === 'function-state' && renderFunctionStateLocationProperties()}
+        {(selectedElement.type === 'message' || selectedElement.type === 'spatial-message') && renderMessageLocationProperties()}
+
+        {selectedElement.type === 'spatial-subject' && renderSpatialFunctionStateProperties()}
+        {selectedElement.type === 'room-container' && renderRoomContainerProperties()}
+        {selectedElement.type === 'spatial-function-state' && renderSpatialFunctionStateProperties()}
+
+        <Box mt={4} mb={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<DeleteIcon />}
+            onClick={() => onElementDelete(selectedElement.id)}
+            fullWidth
+          >
+            Element löschen
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default PropertiesPanel;
